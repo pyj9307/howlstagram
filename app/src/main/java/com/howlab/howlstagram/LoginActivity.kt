@@ -1,5 +1,6 @@
 package com.howlab.howlstagram
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -178,10 +179,11 @@ class LoginActivity : AppCompatActivity() {
         val account = task.getResult(ApiException::class.java)
         firebaseAuthWithGoogle(account.idToken)
     }
+    @SuppressLint("PackageManagerGetSignatures")
     fun printHashKey(pContext: Context) {
         try {
-            val info: PackageInfo = pContext.getPackageManager()
-                .getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES)
+            val info: PackageInfo = pContext.packageManager
+                .getPackageInfo(pContext.packageName, PackageManager.GET_SIGNATURES)
             for (signature in info.signatures) {
                 val md: MessageDigest = MessageDigest.getInstance("SHA")
                 md.update(signature.toByteArray())

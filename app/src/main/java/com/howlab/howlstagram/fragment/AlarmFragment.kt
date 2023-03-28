@@ -39,7 +39,7 @@ class AlarmFragment : Fragment() {
 
         init {
             var uid = auth.uid
-            firestore.collection("alarms").whereEqualTo("destinationUid",uid).addSnapshotListener { value, error ->
+            firestore.collection("alarms").whereEqualTo("destinationUid",uid).addSnapshotListener { value, _ ->
                 alarmList.clear()
                 for (item in value!!.documents){
                     alarmList.add(item.toObject(AlarmModel::class.java)!!)

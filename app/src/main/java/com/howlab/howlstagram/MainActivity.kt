@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
                 var map = mutableMapOf<String,Any>()
                 map["token"] = token
 
-                firestore.collection("pushtokens").document(auth?.uid!!).set(map)
+                firestore.collection("pushtokens").document(auth.uid!!).set(map)
 
             }
 

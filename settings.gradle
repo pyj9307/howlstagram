@@ -8,3 +8,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Howlstagram"
 include ':app'
+include ':mystagram'
+include ':apporiginal'
+include ':appOkay'
+include ':appOkayMy'

@@ -41,7 +41,7 @@ class DetailViewFragment : Fragment() {
             var followModel = result.toObject(FollowModel::class.java)
             if(followModel?.followings?.keys != null && followModel.followings.keys.size > 0){
 
-                binding.detailviewRecyclerveiw.adapter = DetailviewRecyclerviewAdapter(followModel?.followings.keys.toList())
+                binding.detailviewRecyclerveiw.adapter = DetailviewRecyclerviewAdapter(followModel.followings.keys.toList())
                 binding.detailviewRecyclerveiw.layoutManager = LinearLayoutManager(activity)
             }
 
@@ -60,11 +60,11 @@ class DetailViewFragment : Fragment() {
 
             firestore.collection("images")
                 .whereIn("uid",toList)
-                .addSnapshotListener { value, error ->
+                .addSnapshotListener { value, _ ->
                 for (item in value!!.documentChanges){
                     if(item.type == DocumentChange.Type.ADDED){
                         var contentModel = item.document.toObject(ContentModel::class.java)
-                        contentModels.add(contentModel!!)
+                        contentModels.add(contentModel)
                         contentUidsList.add(item.document.id)
                     }
 

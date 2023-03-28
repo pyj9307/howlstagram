@@ -37,7 +37,7 @@ class CommentActivity : AppCompatActivity() {
             comment.userId = auth.currentUser?.email
             comment.comment = binding.commentEdittext.text.toString()
             comment.timestamp = System.currentTimeMillis()
-            firestore.collection("images").document(contentUid!!)?.collection("comments").document()
+            firestore.collection("images").document(contentUid!!).collection("comments").document()
                 .set(comment)
             commentAlarm(dUid!!,binding.commentEdittext.text.toString())
             binding.commentEdittext.setText("")
@@ -66,7 +66,7 @@ class CommentActivity : AppCompatActivity() {
 
         init {
             firestore.collection("images").document(contentUid!!).collection("comments")
-                .addSnapshotListener { value, error ->
+                .addSnapshotListener { value, _ ->
                     comments.clear()
 
                     if (value == null) return@addSnapshotListener

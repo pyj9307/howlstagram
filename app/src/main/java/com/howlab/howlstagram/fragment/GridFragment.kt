@@ -1,5 +1,6 @@
 package com.howlab.howlstagram.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,14 +35,15 @@ class GridFragment : Fragment() {
 
     }
     inner class CellImageViewHolder(val binding : ItemImageviewBinding) : RecyclerView.ViewHolder(binding.root)
+    @SuppressLint("NotifyDataSetChanged")
     inner class GridFragmentRecyclerviewAdapter : RecyclerView.Adapter<CellImageViewHolder>(){
         var contentModels : ArrayList<ContentModel> = arrayListOf()
         init {
-            firestore.collection("images").addSnapshotListener { value, error ->
+            firestore.collection("images").addSnapshotListener { value, _ ->
 
                 for(item in value!!.documentChanges){
                     if(item.type == DocumentChange.Type.ADDED){
-                        contentModels.add(item.document.toObject(ContentModel::class.java)!!)
+                        contentModels.add(item.document.toObject(ContentModel::class.java))
                     }
                 }
 

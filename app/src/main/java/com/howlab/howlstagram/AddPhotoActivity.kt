@@ -57,7 +57,7 @@ class AddPhotoActivity : AppCompatActivity() {
         val imageFileName = "IMAGE_" + timestamp + ".png"
 
 
-        var storagePath = storage.reference?.child("images").child(imageFileName)
+        var storagePath = storage.reference.child("images").child(imageFileName)
 
         storagePath.putFile(photoUri!!).continueWithTask {
             return@continueWithTask storagePath.downloadUrl
@@ -68,8 +68,8 @@ class AddPhotoActivity : AppCompatActivity() {
 
             contentModel.imageUrl = downloadUrl.result.toString()
             contentModel.explain = binding.addphotoEditEdittext.text.toString()
-            contentModel.uid = auth?.uid
-            contentModel.userId = auth?.currentUser?.email
+            contentModel.uid = auth.uid
+            contentModel.userId = auth.currentUser?.email
             contentModel.timestamp = System.currentTimeMillis()
 
             firestore.collection("images").document().set(contentModel)

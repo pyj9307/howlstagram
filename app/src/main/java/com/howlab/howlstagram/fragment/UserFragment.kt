@@ -101,7 +101,7 @@ class UserFragment : Fragment() {
 
             mainActivity?.binding?.toolbarUsername?.text = userId
             mainActivity?.binding?.toolbarBtnBack?.setOnClickListener {
-                mainActivity?.binding?.bottomNavigation.selectedItemId = R.id.action_home
+                mainActivity.binding.bottomNavigation.selectedItemId = R.id.action_home
             }
             binding.accountBtnFollowSignout.text = activity?.getText(R.string.follow)
 
@@ -127,12 +127,12 @@ class UserFragment : Fragment() {
         return binding.root
     }
     fun getFollowingFollowingCount(){
-        firestore.collection("users").document(dUid!!).addSnapshotListener { value, error ->
+        firestore.collection("users").document(dUid!!).addSnapshotListener { value, _ ->
             if(value == null) return@addSnapshotListener
             followModel = value.toObject(FollowModel::class.java)!!
-            if(followModel?.followerCount != null){
+            if(followModel.followerCount != null){
                 //연예인이 스토커들을 관리하는 부분
-                binding.accountFollowerTextview.text = followModel?.followerCount.toString()
+                binding.accountFollowerTextview.text = followModel.followerCount.toString()
                 if(currentUid == dUid){
                     //나의 페이지 일경우
                     return@addSnapshotListener
@@ -145,7 +145,7 @@ class UserFragment : Fragment() {
                 }
             }
 
-            if(followModel?.followingCount != null){
+            if(followModel.followingCount != null){
                 //스토커가 연예인들 카운트
                 binding.accountFollowingTextview.text = followModel.followingCount.toString()
             }
@@ -197,9 +197,9 @@ class UserFragment : Fragment() {
         //연예인이 누구에게 스토킹을 당하는지 (현재 로그인된 UID -> 선택한 사람)
         var tsDocFollower = firestore.collection("users").document(dUid!!)
         var sId = auth.currentUser?.email
-        firestore?.runTransaction {
+        firestore.runTransaction {
             transition ->
-            var followModel = transition.get(tsDocFollower!!).toObject(FollowModel::class.java)
+            var followModel = transition.get(tsDocFollower).toObject(FollowModel::class.java)
 
             if(followModel == null){
                 //아무도 스토킹을 당하지 않을경우(첫 스X킹)
@@ -227,7 +227,7 @@ class UserFragment : Fragment() {
 
     }
     fun getProfileImage(){
-        firestore.collection("profileImages").document(dUid!!).addSnapshotListener { value, error ->
+        firestore.collection("profileImages").document(dUid!!).addSnapshotListener { value, _ ->
             if(value?.data != null){
                 var url = value.data!!["image"]
                 Glide.with(requireActivity()).load(url).apply(RequestOptions().circleCrop()).into(binding.accountIvProfile)
@@ -238,11 +238,11 @@ class UserFragment : Fragment() {
     inner class UserFragmentRecyclerviewAdapter : RecyclerView.Adapter<CellImageViewHolder>(){
         var contentModels : ArrayList<ContentModel> = arrayListOf()
         init {
-            firestore.collection("images").whereEqualTo("uid",dUid).addSnapshotListener { value, error ->
+            firestore.collection("images").whereEqualTo("uid",dUid).addSnapshotListener { value, _ ->
 
                 for(item in value!!.documentChanges){
                     if(item.type == DocumentChange.Type.ADDED){
-                        contentModels.add(item.document.toObject(ContentModel::class.java)!!)
+                        contentModels.add(item.document.toObject(ContentModel::class.java))
                     }
                 }
                 binding.accountPostTextview.text = contentModels.size.toString()

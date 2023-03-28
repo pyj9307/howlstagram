@@ -14,7 +14,7 @@ class FcmManager {
 
     var okHttpClient : OkHttpClient? = null
     var gson : Gson? = null
-    lateinit var firestore : FirebaseFirestore
+    var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
 
     companion object{
         var instance = FcmManager()
@@ -22,7 +22,6 @@ class FcmManager {
     }
 
     init {
-        firestore = FirebaseFirestore.getInstance()
         gson = Gson()
         okHttpClient = OkHttpClient()
     }
