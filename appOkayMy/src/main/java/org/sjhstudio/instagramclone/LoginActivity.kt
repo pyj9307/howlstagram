@@ -60,7 +60,7 @@ class LoginActivity: BaseActivity() {
         binding.facebookLoginBtn.setOnClickListener { facebookLogin() }
 
         // facebook hashkey
-//        generateSSHKey()
+        generateSSHKey()
     }
 
     /**
@@ -84,20 +84,19 @@ class LoginActivity: BaseActivity() {
      */
     // to get hashkey for facebook login initiate this method
     // 83SU+QpQ175R1P2+ZjvZP+Q9/oQ=
-//    fun generateSSHKey(){
-//        try {
-//            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-//            for (signature in info.signatures) {
-//                val md = MessageDigest.getInstance("SHA")
-//                md.update(signature.toByteArray())
-//                val hashKey = String(Base64.encode(md.digest(),0))
-//                Log.i("lsy", "key:$hashKey")
-//            }
-//        } catch (e: Exception) {
-//            Log.e("lsy", "error:", e)
-//        }
-//
-//    }
+    fun generateSSHKey(){
+        try {
+            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+            for (signature in info.signatures) {
+                val md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                val hashKey = String(Base64.encode(md.digest(),0))
+                Log.i("lsy", "key:$hashKey")
+            }
+        } catch (e: Exception) {
+            Log.e("lsy", "error:", e)
+        }
+    }
 
     private fun facebookLogin() {
         callbackManager?.let { cm ->
