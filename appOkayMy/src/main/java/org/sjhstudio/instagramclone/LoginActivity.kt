@@ -7,10 +7,9 @@ import android.util.Base64
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
-import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import androidx.lifecycle.MutableLiveData
+import com.facebook.*
+import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.Auth
@@ -55,6 +54,9 @@ class LoginActivity: BaseActivity() {
         binding.signBtn.setOnClickListener { signInAndSignUp() }
         binding.googleLoginBtn.setOnClickListener { googleLogin() }
         binding.facebookLoginBtn.setOnClickListener { facebookLogin() }
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(application);
 
         // facebook hashkey
 //        generateSSHKey()
@@ -115,6 +117,7 @@ class LoginActivity: BaseActivity() {
                     override fun onError(error: FacebookException) {
                         println("xxx FacebookCallback : onError()")
                         println("xxx error : $error")
+                        Log.d("lsy","여기 맞느지?")
                     }
                 })
             }

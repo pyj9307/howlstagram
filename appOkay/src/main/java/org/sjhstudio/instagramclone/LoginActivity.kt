@@ -2,12 +2,11 @@ package org.sjhstudio.instagramclone
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
-import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
+import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.Auth
@@ -26,7 +25,7 @@ import org.sjhstudio.instagramclone.MyApplication.Companion.userId
 import org.sjhstudio.instagramclone.MyApplication.Companion.userUid
 import org.sjhstudio.instagramclone.databinding.ActivityLoginBinding
 import org.sjhstudio.instagramclone.util.BaseActivity
-import java.lang.Exception
+import java.util.*
 
 class LoginActivity: BaseActivity() {
 
@@ -38,9 +37,23 @@ class LoginActivity: BaseActivity() {
     override fun onStart() {
         super.onStart()
         moveMainActivity(auth?.currentUser) // 자동로그인
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
+// 로깅 추가
+            FacebookSdk.sdkInitialize(getApplicationContext());
+            AppEventsLogger.activateApp(application);
+
+// 유저 및 토큰 확인
+        val accessToken = AccessToken.getCurrentAccessToken()
+        val isLoggedIn = accessToken != null && !accessToken.isExpired
+
+
+
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
@@ -50,7 +63,13 @@ class LoginActivity: BaseActivity() {
         // listener
         binding.signBtn.setOnClickListener { signInAndSignUp() }
         binding.googleLoginBtn.setOnClickListener { googleLogin() }
-        binding.facebookLoginBtn.setOnClickListener { facebookLogin() }
+        binding.facebookLoginBtn.setOnClickListener {
+
+
+
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+
+            facebookLogin() }
     }
 
     /**
@@ -89,7 +108,8 @@ class LoginActivity: BaseActivity() {
 
                     override fun onCancel() { println("xxx FacebookCallback : onCancel()") }
 
-                    override fun onError(error: FacebookException) { println("xxx FacebookCallback : onError()") }
+                    override fun onError(error: FacebookException) { println("xxx FacebookCallback : onError()")
+                    Log.d("lsy","여기 맞느지?")}
                 })
             }
         }
