@@ -1,14 +1,11 @@
 package org.sjhstudio.instagramclone
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -60,7 +57,7 @@ class LoginActivity: BaseActivity() {
         binding.facebookLoginBtn.setOnClickListener { facebookLogin() }
 
         // facebook hashkey
-        generateSSHKey()
+//        generateSSHKey()
     }
 
     /**
@@ -84,19 +81,19 @@ class LoginActivity: BaseActivity() {
      */
     // to get hashkey for facebook login initiate this method
     // 83SU+QpQ175R1P2+ZjvZP+Q9/oQ=
-    fun generateSSHKey(){
-        try {
-            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-            for (signature in info.signatures) {
-                val md = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                val hashKey = String(Base64.encode(md.digest(),0))
-                Log.i("lsy", "key:$hashKey")
-            }
-        } catch (e: Exception) {
-            Log.e("lsy", "error:", e)
-        }
-    }
+//    fun generateSSHKey(){
+//        try {
+//            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+//            for (signature in info.signatures) {
+//                val md = MessageDigest.getInstance("SHA")
+//                md.update(signature.toByteArray())
+//                val hashKey = String(Base64.encode(md.digest(),0))
+//                Log.i("lsy", "key:$hashKey")
+//            }
+//        } catch (e: Exception) {
+//            Log.e("lsy", "error:", e)
+//        }
+//    }
 
     private fun facebookLogin() {
         callbackManager?.let { cm ->
@@ -115,7 +112,10 @@ class LoginActivity: BaseActivity() {
 
                     override fun onCancel() { println("xxx FacebookCallback : onCancel()") }
 
-                    override fun onError(error: FacebookException) { println("xxx FacebookCallback : onError()") }
+                    override fun onError(error: FacebookException) {
+                        println("xxx FacebookCallback : onError()")
+                        println("xxx error : $error")
+                    }
                 })
             }
         }

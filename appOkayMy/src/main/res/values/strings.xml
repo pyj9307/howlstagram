@@ -1,13 +1,9 @@
     <resources>
     <string name="app_name">Instagram Clone</string>
     <!-- Google Login -->
-<!--    <string name="google_client_id">780080544635-f8smsau36d79qj66vqqnur66n2njhsd3.apps.googleusercontent.com</string>-->
-        <!-- re-download google-services.json after rebuild project. copy from res(generader) value.xml -->
-        <string name="google_client_id">109108322723-6uhrs2s42fsvhn5d1isb5c9f1n6l1ltj.apps.googleusercontent.com</string>
-        <!-- Facebook Login -->
-<!--    <string name="facebook_app_id">688546365905015</string>-->
-<!--    <string name="fb_login_protocol_scheme">fb688546365905015</string>>-->
-<!--    <string name="facebook_client_token">8567ffa4fd977af129dbfb23f1cc74af</string>-->
+    <!-- re-download google-services.json after rebuild project. copy from res(generated) value.xml -->
+    <string name="google_client_id">109108322723-6uhrs2s42fsvhn5d1isb5c9f1n6l1ltj.apps.googleusercontent.com</string>
+    <!-- Facebook Login -->
     <string name="facebook_app_id">2455919261240876</string>
     <string name="fb_login_protocol_scheme">fb2455919261240876</string>
     <string name="facebook_client_token">233c03e0a1e4c3824f2d02df369a949b</string>
